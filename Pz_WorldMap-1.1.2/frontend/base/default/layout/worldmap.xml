@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+
+/**
+ * Zing Outsource Software
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zosoft.net so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * We supply professinal magento support.
+ *  - Custom Design, for layout, template, skin, style ...
+ *  - Custom Module, for new featuers, actions, and other custom functions.
+ *  - Product import/export, for import product from excel file or other online shop.
+ *  - Other DIY for magento.
+ * 
+ * @category    ZoSoft
+ * @package     Pz_WorldMap
+ * 
+ * @author      Cheng Wei <cheng.wei@zosoft.net>
+ * @version     $$Id: worldmap.xml 17 2010-02-24 15:27:56Z cwei $$
+ * @copyright   Copyright (C) 2010 Z.O. Software, China (http://www.zosoft.net)
+ */
+ 
+-->
+<layout version="0.1.0">
+
+    <default>
+
+        <!-- Mage_Customer -->
+        <reference name="top.links">
+            <block type="worldmap/links" name="worldmap_link">
+                <action method="addWorldMapLink"></action>
+            </block>
+        </reference>
+    </default>
+    
+	<worldmap_index_index>
+		<reference name="root">
+			<action method="setTemplate">
+				<template>page/2columns-left.phtml</template>
+			</action>
+		</reference>
+		<reference name="content">
+			<block type="worldmap/online" name="worldmap">
+				<action method="setMapWidth"><width>700</width></action>
+				<action method="setMapHeight"><height>450</height></action>
+				<action method="setMapZoom"><room>1</room></action>
+				<action method="setMapCenterLatitude"><latitude>22.5</latitude></action>
+				<action method="setMapCenterLongitude"><longitude>180</longitude></action>
+			</block>
+		</reference>
+	</worldmap_index_index>
+
+</layout>

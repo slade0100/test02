@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<!--
+	/**
+	 * Zing Outsourcing Software
+	 *
+	 * NOTICE OF LICENSE
+	 *
+	 * This source file is subject to the Academic Free License (AFL 3.0)
+	 * that is bundled with this package in the file LICENSE_AFL.txt.
+	 * It is also available through the world-wide-web at this URL:
+	 * http://opensource.org/licenses/afl-3.0.php
+	 * If you did not receive a copy of the license and are unable to
+	 * obtain it through the world-wide-web, please send an email
+	 * to license@zosoft.net so we can send you a copy immediately.
+	 *
+	 * DISCLAIMER
+	 *
+	 * We supply professinal magento support.
+	 * - Custom Design, for layout, template, skin, style ...
+	 * - Custom Module, for new featuers, actions, and other custom functions.
+	 * - Product import/export, for import product from excel file or other online shop.
+	 * - Other DIY for magento.
+	 * 
+	 * @category    ZoSoft
+	 * @package     Pz_WorldMap
+	 * 
+	 * @author      Cheng Wei <cheng.wei@zosoft.net>
+	 * @version     $$Id: config.xml 127 2011-01-28 09:54:41Z cwei $$
+	 * @copyright   Copyright (C) 2010 Z.O. Software, China (http://www.zosoft.net)
+	 */
+-->
+<config>
+	<modules>
+		<Pz_WorldMap>
+			<version>1.0.9</version>
+		</Pz_WorldMap>
+	</modules>
+	<global>
+		<models>
+			<worldmap>
+				<class>Pz_WorldMap_Model</class>
+				<resourceModel>worldmap_mysql4</resourceModel>
+			</worldmap>
+			<worldmap_mysql4>
+				<class>Pz_WorldMap_Model_Entity</class>
+				<entities>
+					<entry>
+						<table>customer_online</table>
+					</entry>
+				</entities>
+			</worldmap_mysql4>
+			<log>
+				<rewrite>
+					<visitor>Pz_WorldMap_Model_Visitor</visitor>
+				</rewrite>
+			</log>
+			<log_mysql4>
+				<rewrite>
+					<visitor>Pz_WorldMap_Model_Entity_Visitor</visitor>
+					<visitor_online>Pz_WorldMap_Model_Entity_Visitor_Online</visitor_online>
+				</rewrite>
+			</log_mysql4>
+		</models>
+		<resources>
+			<worldmap_setup>
+				<setup>
+					<module>Pz_WorldMap</module>
+					<class>Pz_WorldMap_Model_Entity_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</worldmap_setup>
+			<worldmap_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</worldmap_write>
+			<worldmap_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</worldmap_read>
+		</resources>
+		<helpers>
+			<worldmap>
+				<class>Pz_WorldMap_Helper</class>
+			</worldmap>
+		</helpers>
+		<blocks>
+			<worldmap>
+				<class>Pz_WorldMap_Block</class>
+			</worldmap>
+		</blocks>
+		<translate>
+			<modules>
+				<Pz_WorldMap>
+					<files>
+						<default>Pz_WorldMap.csv</default>
+					</files>
+				</Pz_WorldMap>
+			</modules>
+		</translate>
+		<events>
+			<controller_front_init_routers>
+				<observers>
+					<log>
+						<class>worldmap/observe</class>
+						<method>initRoutes</method>
+					</log>
+				</observers>
+			</controller_front_init_routers>
+		</events>
+	</global>
+	<frontend>
+		<routers>
+			<worldmap>
+				<use>standard</use>
+				<args>
+					<module>Pz_WorldMap</module>
+					<frontName>worldmap</frontName>
+				</args>
+			</worldmap>
+		</routers>
+		<layout>
+			<updates>
+				<worldmap>
+					<file>worldmap.xml</file>
+				</worldmap>
+			</updates>
+		</layout>
+	</frontend>
+	<admin>
+        <routers>
+             <adminhtml>
+                 <args>
+                     <modules>
+                         <worldmap after="Mage_Adminhtml">Pz_WorldMap_Adminhtml</worldmap>
+                     </modules>
+                 </args>
+             </adminhtml>
+        </routers>
+	</admin>
+    <adminhtml>
+		<layout>
+			<updates>
+				<worldmap>
+					<file>worldmap.xml</file>
+				</worldmap>
+			</updates>
+		</layout>
+    </adminhtml>
+	<default>
+		<worldmap>
+			<googlemap>
+				<client_id></client_id>
+			</googlemap>
+			<geoip>
+				<filename>GeoLiteCity.dat</filename>
+			</geoip>
+			<setting>
+				<show_frontend>1</show_frontend>
+				<show_customer_name>1</show_customer_name>
+				<marker_format>[{CUSTOMER_NAME}] {LOCATION}, {REMOTE_IP}</marker_format>
+				<region_backend>world</region_backend>
+			</setting>
+		</worldmap>
+	</default>
+</config>

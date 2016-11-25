@@ -1,0 +1,26 @@
+<?php
+$path = dirname(__FILE__);
+$file = $path . DS . '..' . DS . '..' . DS . 'page' . DS . 'head.phtml';
+include ($file);
+
+$protocal = 'http';
+$paddParam = "";
+
+$clientId = Mage::getStoreConfig('worldmap/googlemap/client_id');
+if (substr($clientId, 0, 4) == 'gme-') {
+	$clientId = substr($clientId, 4);
+}
+if ($clientId) {
+	$paddParam = "client=gme-$clientId&";
+}
+
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && $_SERVER['HTTPS'] != 'off') {
+	if ($clientId) {
+		$protocal .= 's';
+	}
+}
+
+$html = "<script src='$protocal://www.google.com/jsapi'></script>";
+$html .= "<script type='text/javascript'>google.load('maps', '3', {other_params: '{$paddParam}sensor=false'});</script>";
+echo $html;
+			

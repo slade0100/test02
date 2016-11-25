@@ -1,0 +1,57 @@
+<?php 
+
+$visitors = $this->getVisitors();
+$count = count($visitors);
+$helper = Mage::helper('worldmap');
+
+$region = Mage::getStoreConfig('worldmap/setting/region_backend');
+if (!$region) {
+	$region = 'world';
+	$level = 'country';
+} else {
+	if (preg_match('/^[A-Z]{2}$/', $region)) {
+		$level = 'country';
+	} else {
+		$level = 'region';
+	}
+}
+
+?>
+<script type='text/javascript'>
+google.setOnLoadCallback(drawMarkerMap);
+
+function drawMarkerMap() {
+
+<?php if ($count):?>
+	var data = new google.visualization.DataTable();
+
+	data.addColumn('number', 'Latitude');
+	data.addColumn('number', 'Longitude');
+	data.addColumn('number', 'Visitors'); 
+	data.addColumn('string', 'HoverText');
+	
+	data.addRows(<?php echo $count ?>);
+
+<?php $pos = 0; foreach ($visitors as $visitor):?>
+	data.setValue(<?php echo $pos?>, 0, <?php echo $visitor->getLatitude()?>);
+	data.setValue(<?php echo $pos?>, 1, <?php echo $visitor->getLongitude()?>);
+	data.setValue(<?php echo $pos?>, 2, 1);
+	data.setValue(<?php echo $pos++?>, 3, '<?php echo $visitor->getLocation()?>');
+<?php endforeach;?>
+
+	var options = {dataMode: 'markers', showLegend:true,
+			<?php if ($level == 'country'):?> showZoomOut:true, <?php endif;?>
+			region:'<?php echo $region?>',
+			width: '640',height: '450'
+			};
+	
+	var container = document.getElementById('map_canvas_marker');
+	var geomap = new google.visualization.GeoMap(container);
+	geomap.draw(data, options);
+
+<?php endif;?>
+
+};
+</script>
+
+<div id='map_canvas_marker'></div>

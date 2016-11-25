@@ -1,0 +1,97 @@
+<?php 
+
+$summery = $this->getSummery();
+$helper = Mage::helper('worldmap');
+
+$region = Mage::registry('current_region');
+if (!$region) {
+	$region = 'world';
+	$level = 'country';
+} else {
+	if (preg_match('/^[A-Z]{2}$/', $region)) {
+		$level = 'country';
+	} else {
+		$level = 'region';
+	}
+}
+?>
+
+<script type='text/javascript'>
+google.load('visualization', '1', {'packages': ['geomap']});
+
+google.setOnLoadCallback(drawCountryMap);
+
+function drawCountryMap() {
+
+	var data = new google.visualization.DataTable();
+	
+	data.addColumn('string', 'Region');
+	data.addColumn('number', 'Visitors');
+	data.addColumn('string', 'HoverText');
+
+<?php if ($summery['country_count']):?>
+	
+<?php if ($level == 'country'):?>
+	//show region
+	data.addRows(<?php echo $summery['region_count'] ?>);
+
+<?php $pos = 0; foreach ($summery['region'] as $countryCode => $regionData):?>
+<?php foreach ($regionData as $regionCode => $count):?>
+	data.setValue(<?php echo $pos?>, 0, '<?php echo $regionCode ? $countryCode.'-'.$regionCode : $countryCode?>');
+	data.setValue(<?php echo $pos?>, 1, <?php echo $count?>);
+	data.setValue(<?php echo $pos++?>, 2, '<?php echo $helper->getLocation($countryCode, $regionCode)?>');
+<?php endforeach;?>
+<?php endforeach;?>
+
+<?php else:?>
+	// show country
+	data.addRows(<?php echo $summery['country_count'] ?>);
+
+<?php $pos = 0; foreach ($summery['country'] as $countryCode => $count):?>
+	data.setValue(<?php echo $pos?>, 0, '<?php echo $countryCode?>');
+	data.setValue(<?php echo $pos?>, 1, <?php echo $count?>);
+	data.setValue(<?php echo $pos++?>, 2, '<?php echo $helper->getLocation($countryCode)?>');
+<?php endforeach;?>
+
+<?php endif;?>
+
+<?php else:?>
+	// no data now
+	data.addRows(1);
+	
+	data.setValue(0, 0, 'US');
+	data.setValue(0, 1, 0);
+	data.setValue(0, 2, '<?php echo $this->__('USA')?>');
+<?php endif;?>
+
+	var options = {dataMode: 'regions', showLegend:true,
+			<?php if ($region != 'world'):?> showZoomOut:true, <?php endif;?>
+			region:'<?php echo $region?>',
+			width: '640',height: '450'
+			};
+	
+	var container = document.getElementById('map_canvas_country');
+	var geomap = new google.visualization.GeoMap(container);
+	geomap.draw(data, options);
+	
+	<?php if ($region != 'world'):?>
+	google.visualization.events.addListener(
+			geomap, 'zoomOut', function(e) {
+				setLocation('<?php echo $this->getUrl('adminhtml/worldmap_online/geomap')?>region/world/');
+			}
+		);
+	<?php endif; ?>
+	
+	<?php if ($level != 'country'):?>
+	google.visualization.events.addListener(
+			geomap, 'regionClick', function(e) {
+				var countryCode = e['region'];
+				setLocation('<?php echo $this->getUrl('adminhtml/worldmap_online/geomap')?>region/'+countryCode+'/');
+			}
+		);
+	<?php endif;?>
+
+};
+</script>
+
+<div id='map_canvas_country'></div>

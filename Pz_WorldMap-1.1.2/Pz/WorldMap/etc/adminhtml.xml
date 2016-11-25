@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+	/**
+	 * Zing Outsourcing Software
+	 *
+	 * NOTICE OF LICENSE
+	 *
+	 * This source file is subject to the Academic Free License (AFL 3.0)
+	 * that is bundled with this package in the file LICENSE_AFL.txt.
+	 * It is also available through the world-wide-web at this URL:
+	 * http://opensource.org/licenses/afl-3.0.php
+	 * If you did not receive a copy of the license and are unable to
+	 * obtain it through the world-wide-web, please send an email
+	 * to license@zosoft.net so we can send you a copy immediately.
+	 *
+	 * DISCLAIMER
+	 *
+	 * We supply professinal magento support.
+	 * - Custom Design, for layout, template, skin, style ...
+	 * - Custom Module, for new featuers, actions, and other custom functions.
+	 * - Product import/export, for import product from excel file or other online shop.
+	 * - Other DIY for magento.
+	 * 
+	 * @category    ZoSoft
+	 * @package     Pz_WorldMap
+	 * 
+	 * @author      Cheng Wei <cheng.wei@zosoft.net>
+	 * @version     $$Id: config.xml 122 2010-12-21 05:28:02Z cwei $$
+	 * @copyright   Copyright (C) 2010 Z.O. Software, China (http://www.zosoft.net)
+	 */ 
+-->
+<config>
+	<menu>
+		<customer>
+			<children>
+				<online>
+					<children>
+						<online translate="title" module="customer">
+							<title>Customers</title>
+							<action>adminhtml/customer_online/</action>
+							<sort_order>10</sort_order>
+						</online>
+						<geomap translate="title" module="worldmap">
+							<title>Map (Regions)</title>
+							<sort_order>100</sort_order>
+							<action>adminhtml/worldmap_online/geomap</action>
+						</geomap>
+						<marker translate="title" module="worldmap">
+							<title>Map (Markers)</title>
+							<sort_order>150</sort_order>
+							<action>adminhtml/worldmap_online/marker</action>
+						</marker>
+					</children>
+				</online>
+			</children>
+		</customer>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<worldmap translate="title" module="worldmap">
+										<title>World Map Settings</title>
+									</worldmap>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

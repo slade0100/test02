@@ -1,0 +1,22 @@
+<div class="pz-map">
+<?php if ($this->getTitle()):?>
+<h4><?php echo $this->getTitle()?></h4>
+<?php endif;?>
+<div id="<?php echo $this->getMapId()?>" class="<?php echo $this->getNameInLayout()?>"
+	style="width: <?php echo $this->getMapWidth()?>px; height: <?php echo $this->getMapHeight()?>px"></div>
+<script type="text/javascript">
+document.observe("dom:loaded", function(){
+	var map = new google.maps.Map($('<?php echo $this->getMapId()?>'), {
+			zoom: <?php echo $this->getMapZoom()?>,
+			center: new google.maps.LatLng(
+						<?php echo $this->getMapCenterLatitude()?>, 
+						<?php echo $this->getMapCenterLongitude()?>),
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+			<?php if($this->getDisableControl()):?>,
+			disableDefaultUI: true 
+			<?php endif;?>
+		});
+});
+</script>
+<div style="clear: both"></div>
+</div>

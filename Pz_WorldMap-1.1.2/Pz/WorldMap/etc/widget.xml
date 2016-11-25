@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+	/**
+	 * Zing Outsourcing Software
+	 *
+	 * NOTICE OF LICENSE
+	 *
+	 * This source file is subject to the Academic Free License (AFL 3.0)
+	 * that is bundled with this package in the file LICENSE_AFL.txt.
+	 * It is also available through the world-wide-web at this URL:
+	 * http://opensource.org/licenses/afl-3.0.php
+	 * If you did not receive a copy of the license and are unable to
+	 * obtain it through the world-wide-web, please send an email
+	 * to license@zosoft.net so we can send you a copy immediately.
+	 *
+	 * DISCLAIMER
+	 *
+	 * We supply professinal magento support.
+	 * - Custom Design, for layout, template, skin, style ...
+	 * - Custom Module, for new featuers, actions, and other custom functions.
+	 * - Product import/export, for import product from excel file or other online shop.
+	 * - Other DIY for magento.
+	 * 
+	 * @category    ZoSoft
+	 * @package     Pz_WorldMap
+	 * 
+	 * @author      Cheng Wei <cheng.wei@zosoft.net>
+	 * @version     $$Id: widget.xml 118 2010-10-23 14:21:37Z cwei $$
+	 * @copyright   Copyright (C) 2010 Z.O. Software, China (http://www.zosoft.net)
+	 */
+-->
+<widgets>
+	<worldmap_map type="worldmap/map">
+		<name>Google Map</name>
+		<description type="desc">Show a google map instance</description>
+		<js>http://maps.google.com/maps/api/js?key=notsupplied&amp;v=3&amp;sensor=false</js>
+		<parameters>
+			<title translate="label">
+				<label>Title</label>
+				<type>text</type>
+				<visible>1</visible>
+			</title>
+			<map_width translate="label">
+				<label>Map width (pixel)</label>
+				<type>text</type>
+				<required>1</required>
+				<visible>1</visible>
+			</map_width>
+			<map_height translate="label">
+				<label>Map height (pixel)</label>
+				<type>text</type>
+				<required>1</required>
+				<visible>1</visible>
+			</map_height>
+			<map_center_latitude translate="label">
+				<label>Map center latitude</label>
+				<type>text</type>
+				<visible>1</visible>
+			</map_center_latitude>
+			<map_center_longitude translate="label">
+				<label>Map center longitude</label>
+				<type>text</type>
+				<visible>1</visible>
+			</map_center_longitude>
+			<map_zoom translate="label">
+				<label>Map zoom</label>
+				<type>text</type>
+				<visible>1</visible>
+			</map_zoom>
+			<disable_control translate="label">
+				<label>Disable google map control</label>
+				<type>select</type>
+				<visible>1</visible>
+				<source_model>adminhtml/system_config_source_yesno</source_model>
+			</disable_control>
+			<markers translate="label">
+				<type>label</type>
+				<visible>1</visible>
+				<helper_block>
+					<type>worldmap/adminhtml_widget_map_selector</type>
+				</helper_block>
+			</markers>
+		</parameters>
+	</worldmap_map>
+</widgets>

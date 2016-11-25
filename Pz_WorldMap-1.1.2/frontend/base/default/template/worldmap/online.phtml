@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * Zing Outsource Software
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zosoft.net so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * We supply professinal magento support.
+ *  - Custom Design, for layout, template, skin, style ...
+ *  - Custom Module, for new featuers, actions, and other custom functions.
+ *  - Product import/export, for import product from excel file or other online shop.
+ *  - Other DIY for magento.
+ * 
+ * @category    ZoSoft
+ * @package     Pz_WorldMap
+ * 
+ * @author      Cheng Wei <cheng.wei@zosoft.net>
+ * @version     $$Id: online.phtml 18 2010-02-24 15:53:23Z cwei $$
+ * @copyright   Copyright (C) 2010 Z.O. Software, China (http://www.zosoft.net)
+ */
+
+?>
+
+<div class="pz-map-online">
+
+<div id="<?php echo $this->getMapId()?>" class="<?php echo $this->getNameInLayout()?>"
+	style="width: <?php echo $this->getMapWidth()?>px; height: <?php echo $this->getMapHeight()?>px"></div>
+
+<script type="text/javascript">
+document.observe("dom:loaded", function(){
+	var map = new google.maps.Map($('<?php echo $this->getMapId()?>'), {
+			zoom: <?php echo $this->getMapZoom()?>,
+			center: new google.maps.LatLng(
+						<?php echo $this->getMapCenterLatitude()?>, 
+						<?php echo $this->getMapCenterLongitude()?>),
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+			<?php if($this->getDisableControl()):?>,
+				disableDefaultUI: true 
+			<?php endif;?>
+		});
+	
+	<?php echo $this->getVisitorsJson()?>.each(function(el){
+	    var imageUrl = el.customer ? '<?php echo $this->getSkinUrl('images/customer-flag.png')?>':'<?php echo $this->getSkinUrl('images/guest-flag.png')?>';
+	    var marker = new google.maps.Marker({
+	        position: new google.maps.LatLng(el.latitude, el.longitude),
+	        map: map,
+	        icon: imageUrl,
+			title: el.text
+	    });
+	});
+});
+</script>
+
+<div style="clear: both"></div>
+</div>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Jing_Log>
+            <active>true</active>
+            <codepool>local</codepool>
+        </Jing_Log>
+    </modules>
+</config>

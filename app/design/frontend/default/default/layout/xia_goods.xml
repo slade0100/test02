@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0.0">
+    <!-- IndexController ouptput config -->
+    <goods_goods_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="goods/goods" name="location" template="goods/goods.phtml" />
+        </reference>
+    </goods_goods_index>
+</layout>
